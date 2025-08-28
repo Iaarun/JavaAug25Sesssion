@@ -67,6 +67,31 @@ public class _004String {
 
         System.out.println(str2.compareTo(str)); //0
         System.out.println(str2.compareToIgnoreCase(str)); //0
+        //contains
+        System.out.println(str.contains("Daa"));//true
+
+        //substring
+        String abc = "emai.123_87385748l@test.com";
+        System.out.println(abc.substring(5));
+        System.out.println(abc.substring(5,8));
+        System.out.println(abc.substring(0, abc.indexOf('@')));
+        //trim
+        System.out.println(str);
+        System.out.println(str.trim());
+        //replace
+        System.out.println(str.trim().replace(" ",";"));
+        //
+        System.out.println(str.startsWith("est"));
+        //ends with
+        System.out.println(str.endsWith("ta"));
+        //split
+        String x="This is a test data used for research";
+        System.out.println(x);
+        String[] arr = x.split("a");
+        for (String s: arr) {
+            System.out.println(s);
+        }
+
 
 
 
