@@ -6,7 +6,11 @@ import java.util.Collections;
 public class _005Arrays {
     public static void main(String[] args) {
         _005Arrays arr = new _005Arrays();
-        arr.multiDimensionalArray();
+        int [] a = {10,20,30,40,50};
+        int [] b = new int []{15,25,35,45,55};
+        int [] c = {12,22,32,42,52,62,72,82,92};
+    //    arr.iterateOverArray(c);
+        arr.getSumOfArray(b);
     }
 
     public void arrayDeclaration(){
@@ -29,7 +33,7 @@ public class _005Arrays {
     public void arrayFunctions(){
         Integer arr[] = {10,31,68,22,8};
         int arr1[] = new int []{10,20,30,40,50};
-        System.out.println(arr[2]);
+        System.out.println(arr[6]);
 
         System.out.println(Arrays.toString(arr));
         Arrays.sort(arr);
@@ -40,7 +44,7 @@ public class _005Arrays {
         System.out.println(arr.length);
     }
 
-    public void multiDimensionalArray(){
+      void multiDimensionalArray(){
         //first bracket is row and second is column
         int arr[][] = new int[3][4];
         System.out.println(arr.length);
@@ -65,5 +69,19 @@ public class _005Arrays {
 
 
 
+    }
+
+    public void iterateOverArray(int[] arr){
+       for (int i =0;i<arr.length; i++){
+              System.out.println(arr[i]);
+       }
+    }
+
+    public void getSumOfArray(int []arr){
+        int sum =0;
+        for (int i=0; i<arr.length;i++){
+            sum = sum+arr[i];
+        }
+        System.out.println("Sum of array is: "+sum);
     }
 }

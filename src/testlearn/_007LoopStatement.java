@@ -54,8 +54,8 @@ public class _007LoopStatement {
         System.out.println(max);
     }
 
-    //write a program to find second maximum number in an array
-    //nested for loop when user need to iterate on 2D array
+    //write a program to find second maximum number in an array with parameterized function
+    //nested for loop when user need to iterate on 2D array  with parameterized function
     // upper for loop is for rows and inner for loop is for columns
 
     public void nestedForLoop(){
