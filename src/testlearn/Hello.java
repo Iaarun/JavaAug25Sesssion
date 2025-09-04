@@ -1,5 +1,7 @@
 package testlearn;
 
+import oopsConcepts.accessModifier.Shape;
+
 public class Hello {
     public static void main(String[] args) {
 //        System.out.println("Hello World!!");
@@ -9,6 +11,12 @@ public class Hello {
 
         _005Arrays ar = new _005Arrays();
         ar.multiDimensionalArray();  //function reusability
+
+        Shape shape = new Shape();
+      //  shape.defaultMethod();
+        //shape.protectedMethod();
+        shape.publicMethod();
+        //shape.privateMethod(); // This line would cause a compile-time error
 
     }
 }

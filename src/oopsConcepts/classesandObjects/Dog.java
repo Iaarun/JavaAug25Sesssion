@@ -55,4 +55,7 @@ public class Dog {
     public void sleep(String name) {
         System.out.println( name+ " is sleeping");
     }
+    static      void testMethod(){
+        System.out.println("This is a test method");
+    }
 }
