@@ -30,9 +30,10 @@ public class Box {
     // Parameterized Constructor
     Box(double width, double height, double depth){
  //      this();    // calling no-argument constructor
+        this.displayFunction();
        this.width = width;
          this.height = height;
-            this.depth = depth;
+         this.depth = depth;
     }
     public static void main(String[] args) {
    //    Box box1 = new Box();
@@ -41,12 +42,17 @@ public class Box {
        // box1.depth = 30;
     //    double volume1 = box1.width * box1.height * box1.depth;
       //  System.out.println("Volume of Box 1: " + volume1);
+        /*
         Box box2 = new Box(10, 20, 30);
         double volume2 = box2.width * box2.height * box2.depth;
         System.out.println("Volume of Box 2: " + volume2);
-
+*/
         Box box3 = new Box();
         double volume3 = box3.width * box3.height * box3.depth;
         System.out.println("Volume of Box 3: " + volume3);
+    }
+
+    public void displayFunction(){
+        System.out.println("This is display function");
     }
 }
