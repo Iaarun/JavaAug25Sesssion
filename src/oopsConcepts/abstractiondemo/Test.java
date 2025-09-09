@@ -14,5 +14,14 @@ public class Test {
         r.powerOn();
         r.remoteControl();
         r.powerOff();
+
+        SoundSystem ss = new SoundSystem(); // creating object of SoundSystem class or instance
+
+         Remote r1 = new Remote(){ // Anonymous class
+            @Override
+            void remoteControl() {
+                System.out.println("AC On/Off");
+            }
+         };
     }
 }
