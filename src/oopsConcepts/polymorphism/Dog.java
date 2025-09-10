@@ -1,0 +1,16 @@
+package oopsConcepts.polymorphism;
+
+public class Dog extends Animal{
+
+  public   void sound() {
+        System.out.println("Dog barks");
+    }
+    public   void eat() {
+        System.out.println("Dog eats bones");
+    }
+
+    // method hiding example
+    /*public static void display() {
+        System.out.println("Dog eats bones");
+    } */
+}
