@@ -10,7 +10,7 @@ public class Dog extends Animal{
     }
 
     // method hiding example
-    /*public static void display() {
+    public static void display() {
         System.out.println("Dog eats bones");
-    } */
+    }
 }
