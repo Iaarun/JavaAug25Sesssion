@@ -182,7 +182,6 @@ public class ArrayListDemo {
      int total=   number.stream().filter(x->x%2==0)
                 .mapToInt(Integer::intValue).sum();
         System.out.println("Sum of even numbers : "+total);
-
     }
 }
 
