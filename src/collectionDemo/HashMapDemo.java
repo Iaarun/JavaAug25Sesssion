@@ -1,6 +1,8 @@
 package collectionDemo;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /*
   HashMap class implements the Map interface
@@ -13,7 +15,7 @@ import java.util.HashMap;
 public class HashMapDemo {
     public static void main(String[] args) {
         HashMapDemo obj = new HashMapDemo();
-        obj.hashMapBasics();
+        obj.traverseHashMap();
     }
 
     public void hashMapBasics(){
@@ -49,7 +51,39 @@ public class HashMapDemo {
         map1.put("Bhutan", 10);
         map.putAll(map1);
         System.out.println(map);
+        System.out.println(map.get("China1"));
+        System.out.println(map.getOrDefault("China1", 100));
+    }
 
+    public void traverseHashMap(){
+        HashMap <String, Integer> map = new HashMap<>();
+        map.put("India", 1);
+        map.put("USA", 2);
+        map.put("UK", 3);
+        map.put("India", 4);
+        map.put("Russia", 5);
+        //using for each loop
+        System.out.println("====using for each loop====");
+        for(Map.Entry<String, Integer> entry:   map.entrySet()){
+            System.out.println(entry.getKey()+" : "+entry.getValue());
+        }
+
+        System.out.println("===using foreach method with lambda====");
+        map.forEach((x, y)->{
+            System.out.println(x+" : "+y);
+        });
+
+        System.out.println("===using Stream API====");
+        map.entrySet().stream().forEach(x->{
+            System.out.println(x.getKey()+" : "+x.getValue());
+        });
+
+        System.out.println("===using Iterator====");
+          Iterator<Map.Entry<String, Integer>> entry=   map.entrySet().iterator();
+          while(entry.hasNext()){
+               Map.Entry<String, Integer> e = entry.next();
+              System.out.println(e.getKey()+" : "+e.getValue());
+          }
 
     }
 
