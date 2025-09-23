@@ -14,7 +14,6 @@ public class LaunchBrowser {
     public void launchapplication(){
       //  WebDriver driver = new WebDriver();
         WebDriver driver = new ChromeDriver();
-
         //maximize the browser window
         driver.manage().window().maximize();
         //launch the application
