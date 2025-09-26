@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class BasicSeleniumFunctions {
         BasicSeleniumFunctions obj = new BasicSeleniumFunctions();
         obj.launchBrowser("chrome");
        // obj.launchApp("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-       obj.selectMultipleCheckBox();
+       obj.handleDataList();
     //    obj.closeBrowser();
     }
 
@@ -41,6 +42,47 @@ public class BasicSeleniumFunctions {
 
     public void launchApp(String url){
         driver.get(url);
+    }
+
+    public void handleDataList(){
+        driver.navigate().to("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+    WebElement datalist=    driver.findElement(By.name("my-datalist"));
+    datalist.sendKeys("TestData");
+    datalist.clear();
+    datalist.click();
+
+   List<WebElement>options=  driver.findElements(By.xpath("//datalist[@id='my-options']/option"));
+     //getAttribute returns the value of an attribute
+        for (WebElement option : options) {
+            System.out.println(option.getAttribute("value"));
+        }
+
+    }
+
+    public void handleDropDown() throws InterruptedException {
+        driver.navigate().to("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+     WebElement dropdown=   driver.findElement(By.name("my-select"));
+     //use select class to handle dropdown
+        Select select = new Select(dropdown);
+        // default selected value
+    WebElement firstselected=   select.getFirstSelectedOption();
+    //getText method will fetch the text of the element
+        System.out.println(firstselected.getText());
+// options available in dropdown
+        System.out.println("===options available in dropdown===");
+      List<WebElement> alloption=  select.getOptions();
+      // iter shortcut to implement foreach loop
+      for(WebElement option: alloption){
+          System.out.println(option.getText());
+      }
+            select.selectByVisibleText("Two");
+      Thread.sleep(2000);
+      select.selectByValue("3");
+        Thread.sleep(2000);
+      select.selectByIndex(0);
+
+
+
     }
 
     public void selectMultipleCheckBox(){
