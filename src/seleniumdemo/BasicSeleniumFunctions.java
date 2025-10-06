@@ -18,8 +18,8 @@ public class BasicSeleniumFunctions {
         BasicSeleniumFunctions obj = new BasicSeleniumFunctions();
         obj.launchBrowser("chrome");
        // obj.launchApp("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-       obj.handleDataList();
-    //    obj.closeBrowser();
+       obj.handlingFrames();
+        obj.closeBrowser();
     }
 
     public void launchBrowser(String browser) {
@@ -44,8 +44,25 @@ public class BasicSeleniumFunctions {
         driver.get(url);
     }
 
+    public void handlingFrames(){
+           driver.get("https://jqueryui.com/button/");
+        // switch to frame by index
+    //    driver.switchTo().frame(0);
+        //locating frame using xpath
+     WebElement demoframe=   driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+        driver.switchTo().frame(demoframe);
+        WebElement button=   driver.findElement(By.xpath("//div[@class='widget']//button[contains(text(),'A button element')]"));
+        System.out.println(button.isDisplayed());
+        //switch back to main page from frame
+        driver.switchTo().defaultContent();
+      WebElement img=  driver.findElement(By.xpath("//a[@href='/']"));
+        System.out.println(img.isDisplayed());
+
+
+    }
     public void handleDataList(){
         driver.navigate().to("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+
     WebElement datalist=    driver.findElement(By.name("my-datalist"));
     datalist.sendKeys("TestData");
     datalist.clear();
