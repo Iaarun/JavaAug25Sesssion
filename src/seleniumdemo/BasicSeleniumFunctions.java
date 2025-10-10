@@ -1,25 +1,26 @@
 package seleniumdemo;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WindowType;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Set;
 
 public class BasicSeleniumFunctions {
     WebDriver driver;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, AWTException {
         BasicSeleniumFunctions obj = new BasicSeleniumFunctions();
         obj.launchBrowser("chrome");
        // obj.launchApp("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-       obj.handlingFrames();
-        obj.closeBrowser();
+       obj.handleMutipleWindows();
+     //   obj.closeBrowser();
     }
 
     public void launchBrowser(String browser) {
@@ -40,10 +41,127 @@ public class BasicSeleniumFunctions {
         }
     }
 
+
     public void launchApp(String url){
         driver.get(url);
     }
+    public void handleMutipleWindows() throws InterruptedException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/");
+     String tabid=   driver.getWindowHandle();
+        System.out.println(tabid);
+    //    driver.switchTo().newWindow(WindowType.TAB);
+      WebElement webbtn=  driver.findElement(By.xpath("//a[normalize-space()='Web form']"));
+      Actions action = new Actions(driver);
+      Thread.sleep(2000);
+        action.keyDown(Keys.CONTROL).click(webbtn).keyUp(Keys.CONTROL).build().perform();
+        Set<String> allids=  driver.getWindowHandles();
+        System.out.println(allids);
+        for(String id:allids){
+            if(!id.equals(tabid)){
+                driver.switchTo().window(id);
+                System.out.println(driver.getCurrentUrl());
+                driver.findElement(By.id("my-text-id")).sendKeys("Hello Selenium");
+            }
+        }
+        driver.switchTo().window(tabid);
+        System.out.println(driver.getCurrentUrl());
+    }
+    public void handleAlert() throws InterruptedException {
+        /*
+           information alert
+            confirmation alert
+             prompt alert
+         */
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/dialog-boxes.html");
+        driver.findElement(By.id("my-alert")).click();
+        Thread.sleep(2000);
+        //NosuchAlertPresentException
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
 
+        //confirmation alert
+        driver.findElement(By.id("my-confirm")).click();
+        Thread.sleep(2000);
+        alert = driver.switchTo().alert();
+        System.out.println(alert.getText());
+        alert.dismiss();
+
+        //prompt alert
+        driver.findElement(By.id("my-prompt")).click();
+        Thread.sleep(2000);
+        alert = driver.switchTo().alert();
+        System.out.println(alert.getText());
+        alert.sendKeys("Hello Selenium");
+        alert.accept();
+    }
+
+
+     public void fileUploadUsingRobotClass() throws AWTException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+      WebElement fileupload=   driver.findElement(By.name("my-file"));
+      Actions action  = new Actions(driver);
+      action.moveToElement(fileupload).click().build().perform();
+
+      Robot robot = new Robot();
+
+      String filePath="C:\\Users\\ACER\\Documents\\TestFileUpload\\SampleTextFile.txt";
+      StringSelection stringSelection = new StringSelection(filePath);
+      Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+      robot.delay(1000);
+      robot.keyPress(KeyEvent.VK_CONTROL);
+      robot.keyPress(KeyEvent.VK_V);
+
+      robot.keyRelease(KeyEvent.VK_V);
+      robot.keyRelease(KeyEvent.VK_CONTROL);
+
+        robot.delay(1000);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+     }
+     public void fileUploadusingSendKeys(){
+        String filePath="C:\\Users\\ACER\\Documents\\TestFileUpload\\SampleTextFile.txt";
+         driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        driver.findElement(By.name("my-file")).sendKeys(filePath);
+     }
+    public void sendDataUsingActionsClass(){
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        WebElement userNameField= driver.findElement(By.id("my-text-id"));
+        System.out.println(userNameField.isDisplayed());
+        //action class is used to perform mouse and keyboard actions
+        Actions action = new Actions(driver);
+        //sendkeys to enter data in the input field
+        //action.moveToElement(userNameField).click().sendKeys("Hello Selenium using Actions class").build().perform();
+      //action.moveToElement(userNameField).doubleClick().sendKeys("hello").build().perform();
+        action.moveToElement(userNameField).click().keyDown(Keys.LEFT_SHIFT).sendKeys("hello").keyUp(Keys.LEFT_SHIFT).build().perform();
+    }
+public void handleSlider(){
+        driver.get("https://jqueryui.com/slider/");
+    //switch to frame
+   WebElement demoframe=   driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+   driver.switchTo().frame(demoframe);
+   WebElement slider=   driver.findElement(By.xpath("//div[@id='slider']/span"));
+   //action class is used to perform mouse and keyboard actions
+    Actions action = new Actions(driver);
+    //move the slider by 200 pixels to right
+    action.dragAndDropBy(slider,200,0).perform();
+    //move the slider by 100 pixels to left
+ //   action.dragAndDropBy(slider,-100,0).perform();
+}
+ public void dragandDrop(){
+        driver.get("https://jqueryui.com/droppable/");
+        //switch to frame
+     WebElement demoframe=   driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+     driver.switchTo().frame(demoframe);
+        WebElement source = driver.findElement(By.id("draggable"));
+        WebElement target = driver.findElement(By.id("droppable"));
+        //action class is used to perform mouse and keyboard actions
+       Actions action = new Actions(driver);
+
+    //   action.clickAndHold(source).moveToElement(target).release().build().perform();
+   action.dragAndDrop(source,target).perform();
+ //    action.dragAndDropBy(source,1000,0).release().build().perform();
+
+ }
     public void handlingFrames(){
            driver.get("https://jqueryui.com/button/");
         // switch to frame by index
