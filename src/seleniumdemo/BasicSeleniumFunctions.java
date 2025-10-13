@@ -1,25 +1,29 @@
 package seleniumdemo;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
-
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 public class BasicSeleniumFunctions {
     WebDriver driver;
 
-    public static void main(String[] args) throws InterruptedException, AWTException {
+    public static void main(String[] args) throws InterruptedException, AWTException, IOException {
         BasicSeleniumFunctions obj = new BasicSeleniumFunctions();
         obj.launchBrowser("chrome");
        // obj.launchApp("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-       obj.handleMutipleWindows();
+       obj.captureScreenShot();
      //   obj.closeBrowser();
     }
 
@@ -45,6 +49,37 @@ public class BasicSeleniumFunctions {
     public void launchApp(String url){
         driver.get(url);
     }
+    public void captureScreenShot() throws IOException {
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        driver.findElement(By.name("my-date")).click();
+        //type casting driver object to TakesScreenshot interface
+     TakesScreenshot ts=    (TakesScreenshot)driver;
+     File file= ts.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file, new File("E:\\screenshot\\calender.jpg"))  ;
+
+
+        //capture screenshot of a specific element
+     WebElement cal=   driver.findElement(By.xpath("//div[@class='datepicker-days']"));
+    file= cal.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file, new File("E:\\screenshot\\calenderElement.jpg"))  ;
+
+    }
+
+    public void scroll(){
+        driver.get("http://www.tizag.com/javascriptT/javascript-innerHTML.php");
+        driver.manage().timeouts().pageLoadTimeout( Duration.ofSeconds(10));
+        //randomly scroll down the page
+        JavascriptExecutor js= (JavascriptExecutor) driver;  //casting driver into JavascriptExecutor
+   //    js.executeScript("window.scrollBy(0,1000)");
+
+        //to scroll till the element is visible on the page
+ //    WebElement airport=   driver.findElement(By.id("userInput"));
+ // js.executeScript("arguments[0].scrollIntoView();",airport);
+
+        //scroll to the bottom of the page
+        js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+
+    }
     public void handleMutipleWindows() throws InterruptedException {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/");
      String tabid=   driver.getWindowHandle();
@@ -54,7 +89,7 @@ public class BasicSeleniumFunctions {
       Actions action = new Actions(driver);
       Thread.sleep(2000);
         action.keyDown(Keys.CONTROL).click(webbtn).keyUp(Keys.CONTROL).build().perform();
-        Set<String> allids=  driver.getWindowHandles();
+        Set<String> allids=  driver.getWindowHandles();// implemts linked hashset
         System.out.println(allids);
         for(String id:allids){
             if(!id.equals(tabid)){
@@ -65,6 +100,15 @@ public class BasicSeleniumFunctions {
         }
         driver.switchTo().window(tabid);
         System.out.println(driver.getCurrentUrl());
+
+/*        //When there more than 2 tabs we will use iterator
+        Iterator<String> it=  allids.iterator();
+           it.next(); // gives you id of first tab
+           it.next(); // gives you id of second tab
+       String thirdtab= it.next();
+       driver.switchTo().window(thirdtab);
+
+ */
     }
     public void handleAlert() throws InterruptedException {
         /*
