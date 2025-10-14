@@ -3,6 +3,7 @@ package seleniumdemo;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -23,19 +24,25 @@ public class BasicSeleniumFunctions {
         BasicSeleniumFunctions obj = new BasicSeleniumFunctions();
         obj.launchBrowser("chrome");
        // obj.launchApp("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-       obj.captureScreenShot();
+       obj.handleWebTable();
      //   obj.closeBrowser();
     }
 
     public void launchBrowser(String browser) {
+        ChromeOptions options = new ChromeOptions();
+      //  options.addArguments("--incognito");
+        options.addArguments("--disable-notifications");
+        options.addArguments("--start-maximized");
+        options.addArguments("--disable-popup-blocking");
+
         if (browser.equalsIgnoreCase("chrome")) {
-            driver = new ChromeDriver();
+            driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
         } else {
             System.out.println("Please pass the correct browser: " + browser);
         }
-        driver.manage().window().maximize();
+       // driver.manage().window().maximize();
 
     }
 
@@ -48,6 +55,31 @@ public class BasicSeleniumFunctions {
 
     public void launchApp(String url){
         driver.get(url);
+    }
+    public void handleWebTable(){
+                driver.get("https://www.moneycontrol.com/markets/indian-indices/");
+           List<WebElement> head=     driver.findElements(By.xpath("//table[@id='indicesTable']/thead/tr/th"));
+          int noOfCol=     head.size();
+        System.out.println("Number of columns: "+noOfCol);
+       List<WebElement> tbody=   driver.findElements(By.xpath("//table[@id='indicesTable']/tbody/tr"));
+      int noOfRows=   tbody.size();
+        System.out.println("Number of rows: "+noOfRows);
+       //Print all header
+        for(int i=1;i<=noOfCol; i++){
+        String headerName=    driver.findElement(By.xpath("//table[@id='indicesTable']/thead/tr[1]/th["+i+"]")).getText();
+            System.out.print(headerName+" | ");
+        }
+        System.out.println();
+        System.out.println("===================================");
+        //completedata of the table outer loop for rows and inner loop for columns
+         for( int i=1; i<=noOfRows; i++){
+             for(int j=1; j<=noOfCol-2; j++){
+              String cellData=   driver.findElement(By.xpath("//table[@id='indicesTable']/tbody/tr["+i+"]/td["+j+"]")).getText();
+                    System.out.print(cellData+" | ");
+             }
+             System.out.println();
+         }
+
     }
     public void captureScreenShot() throws IOException {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
