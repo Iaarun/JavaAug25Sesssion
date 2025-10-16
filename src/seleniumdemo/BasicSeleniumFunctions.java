@@ -24,7 +24,7 @@ public class BasicSeleniumFunctions {
         BasicSeleniumFunctions obj = new BasicSeleniumFunctions();
         obj.launchBrowser("chrome");
        // obj.launchApp("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-       obj.handleWebTable();
+       obj.handleCalender();
      //   obj.closeBrowser();
     }
 
@@ -55,6 +55,28 @@ public class BasicSeleniumFunctions {
 
     public void launchApp(String url){
         driver.get(url);
+    }
+
+    public void handleCalender(){
+        // February 2026 17
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
+        driver.findElement(By.name("my-date")).click();
+     String caldata=   driver.findElement(By.xpath("//div[@class='datepicker-days']/table/thead/tr[2]/th[2]")).getText();
+        System.out.println(caldata);
+      String month=  caldata.split(" ")[0].trim();
+      String year= caldata.split(" ")[1].trim();
+        System.out.println("Month: "+month+" Year: "+year);
+        while(!(month.equals("February") && year.equals("2026"))){
+            driver.findElement(By.xpath("//div[@class='datepicker-days']/table/thead/tr[2]/th[3]")).click();
+            caldata=   driver.findElement(By.xpath("//div[@class='datepicker-days']/table/thead/tr[2]/th[2]")).getText();
+            month=  caldata.split(" ")[0].trim();
+            year= caldata.split(" ")[1].trim();
+        }
+//select  17 th of the month
+        driver.findElement(By.xpath("//td[normalize-space()='17']")).click();
+        // click outside the calendar
+        driver.findElement(By.xpath("//h1")).click();
+
     }
     public void handleWebTable(){
                 driver.get("https://www.moneycontrol.com/markets/indian-indices/");
