@@ -62,6 +62,7 @@ public class BasicSeleniumFunctions {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/web-form.html");
         driver.findElement(By.name("my-date")).click();
      String caldata=   driver.findElement(By.xpath("//div[@class='datepicker-days']/table/thead/tr[2]/th[2]")).getText();
+   //   WebElement cal=  driver.findElement(By.xpath("//div[@class='datepicker-days']/table/thead/tr[2]/th[2]"));
         System.out.println(caldata);
       String month=  caldata.split(" ")[0].trim();
       String year= caldata.split(" ")[1].trim();
