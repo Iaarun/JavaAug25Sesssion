@@ -2,11 +2,14 @@
 <suite name="DemoSuite">
     <test name="DemoTest">
         <classes>
-            <class name="testNgDemo.LoginTest">
+      <!--      <class name="testNgDemo.LoginTest">
             <methods>
                 <include name="captureScreenShot"/>
             </methods>
         </class >
+        -->
+            <class name="testNgDemo.TestNgIgnore">
+            </class>
         </classes>
     </test>
 </suite>
