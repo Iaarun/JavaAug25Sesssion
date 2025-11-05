@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="RetryMechanismSuite">
+    <listeners>
+        <listener class-name="testngretrylogic.AnnotationTransformer"></listener>
+    </listeners>
+    <test name="DemoTest">
+        <classes>
+            <class name="testngretrylogic.TestNgRetryAnnotation">
+            </class>
+        </classes>
+    </test>
+</suite>
