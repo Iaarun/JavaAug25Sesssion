@@ -3,6 +3,9 @@ package testNgDemo;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -12,8 +15,9 @@ import org.testng.asserts.SoftAssert;
 
     Difference between Assert and SoftAssert or Assert and Verify
  */
+@Listeners(testngretrylogic.TestListeners.class)
 public class TestNgAssertions {
-
+    WebDriver driver;
     @Test (enabled = false)
     public void testMethod(){
         System.out.println("Test Method Started");
@@ -30,32 +34,35 @@ public class TestNgAssertions {
         softAssert.assertAll();
     }
 
-    @Test (enabled = false)
+    @Test
     public void verifyTitleofThepage(){
-
         String expectedhomePageTitle="Home page123";
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://live.techpanda.org/index.php/");
-        driver.manage().window().maximize();
       String actualHomePageTitle=  driver.getTitle();
-
       Assert.assertEquals(actualHomePageTitle, expectedhomePageTitle, "Home Page title is not matching");
 
       driver.quit();
     }
 
     @Test
-    public void verifyTitleofThepageSofAssert(){
+    public void verifyTitleofThepageSoftAssert(){
       SoftAssert softAssert = new SoftAssert();
-        String expectedhomePageTitle="Home page123";
-        WebDriver driver = new ChromeDriver();
+        String expectedhomePageTitle="Home page";
+        String actualHomePageTitle=  driver.getTitle();
+        softAssert.assertEquals(actualHomePageTitle, expectedhomePageTitle, "Home Page title is not matching");
+        softAssert.assertAll();
+    }
+
+    @BeforeMethod
+    public void launchBrowser(){
+      driver = new ChromeDriver();
         driver.get("https://live.techpanda.org/index.php/");
         driver.manage().window().maximize();
-        String actualHomePageTitle=  driver.getTitle();
+    }
 
-        softAssert.assertEquals(actualHomePageTitle, expectedhomePageTitle, "Home Page title is not matching");
-        driver.quit();
-
-        softAssert.assertAll();
+    @AfterMethod
+    public void closeBrowser(){
+      if(driver!=null){
+          driver.quit();
+      }
     }
 }
